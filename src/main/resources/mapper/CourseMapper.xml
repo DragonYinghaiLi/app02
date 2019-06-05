@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.okami.apps.app02.dao.CourseMapper">
+
+    <select id="query" resultType="com.okami.apps.app02.bean.Course">
+        select * from sms_course<where>
+        <if test="realname != null">realname like concat('%',#{name},'%')</if>
+        <if test="telephone != null"> AND description like concat('%',#{description},'%')</if>
+        <if test="password != null"> AND credit=#{credit}</if>
+
+        <if test="status != null">AND teacher_id=#{teacher_id}</if>
+    </where>
+    </select>
+
+    <select id="selectAll" resultType="com.okami.apps.app02.bean.Course">
+    select * from sms_course
+  </select>
+
+    <select id="selectByPrimaryKey" resultType="com.okami.apps.app02.bean.Course">
+    select * from sms_course where id=#{id}
+  </select>
+
+    <insert id="insert">
+        insert  into  sms_course value (#{id} ,#{name},#{description}  ,#{credit}  ,#{teacher_id}   )
+    </insert>
+
+    <update id="update">
+        update  sms_user
+        <set>
+            <if test="realname != null">name=#{name},</if>
+            <if test="telephone!=null">description=#{description},</if>
+            <if test="password != null">credit=#{credit},</if>
+            <if test="status != null">teacher_id=#{teacher_id}</if>
+        </set>
+        where id=#{id}
+    </update>
+
+
+    <delete id="deleteByPrimaryKey">
+        delete from sms_course  where id=#{id}
+    </delete>
+
+</mapper>
